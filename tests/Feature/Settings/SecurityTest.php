@@ -29,6 +29,16 @@ test('security page is displayed', function () {
             ->where('twoFactorEnabled', false),
         );
 });
+test('access dashboard without profile redirects to create profile', function () {
+    $user = User::factory()->create([
+        'role' => 'creator',
+    ]);
+
+    $response = $this->actingAs($user)
+        ->get(route('dashboard'));
+
+    $response->assertRedirect(route('user-profiles.create'));
+});
 
 test('security page requires password confirmation when enabled', function () {
     $this->skipUnlessFortifyHas(Features::twoFactorAuthentication());

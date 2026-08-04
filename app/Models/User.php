@@ -49,4 +49,9 @@ class User extends Authenticatable implements PasskeyUser
             'role' => 'string',
         ];
     }
+
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
 }
